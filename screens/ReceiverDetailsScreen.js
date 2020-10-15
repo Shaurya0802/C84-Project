@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Card, Header, Icon } from 'react-native-elements';
 import firebase from 'firebase';
 import db from '../config';
@@ -72,7 +72,7 @@ export default class ReceiverDetailsScreen extends React.Component {
                     </Card>
                 </View>
 
-                <View style={{flex: 0.3}}>
+                <View style={{flex: 0.3, marginTop: 75}}>
                     <Card title = {'Receiver Information'} titleStyle = {{fontSize: 20}}> 
                         <Card>
                             <Text style={{fontWeight: 'bold'}}>
@@ -82,7 +82,7 @@ export default class ReceiverDetailsScreen extends React.Component {
 
                         <Card>
                             <Text style={{fontWeight: 'bold'}}>
-                                contact: {this.state.receiverContact}
+                                Contact: {this.state.receiverContact}
                             </Text>
                         </Card>
 
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
          width: 0,
          height: 8
        },
-      elevation : 16
+      elevation : 16,
+      marginTop: 100
     }
 });

@@ -43,7 +43,7 @@ export default class ExchangeThings extends React.Component {
         return (
             <View style={{flex: 1}}>
                 <MyHeader title="Request Things" />
-                
+
                 <KeyboardAvoidingView style={styles.keyBoardStyle} behavior="padding" enabled>
                     <TextInput 
                         placeholder="Enter thing name" 

@@ -18,8 +18,7 @@ export default class SettingScreen extends React.Component {
     }
 
     getUserDetails = () => {
-        var user = firebase.auth().currentUser;
-        var email = user.email;
+        var email = firebase.auth().currentUser.email;
         db.collection('users').where('email_id','==', email).get().then((snapshot) => {
             snapshot.forEach(doc => {
                 var data = doc.data();
@@ -122,7 +121,8 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 0, height: 8},
         shadowOpacity: 0.3,
         shadowRadius: 10.32,
-        elevation: 16
+        elevation: 16,
+        marginTop: 60
     },
     buttonText: {
         color: '#ffff',
