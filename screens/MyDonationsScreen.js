@@ -35,7 +35,6 @@ export default class MyDonationsScreen extends React.Component {
             key={i}
             title={item.thing_name}
             subtitle={"Requested By : " + item.requested_by +"\nStatus : " + item.request_status}
-            leftElement={<Icon name="book" type="font-awesome" color ='#696969'/>}
             titleStyle={{ color: 'black', fontWeight: 'bold' }}
             rightElement={
                 <TouchableOpacity style={styles.button}>
@@ -45,7 +44,6 @@ export default class MyDonationsScreen extends React.Component {
             bottomDivider
         />
     )
-
 
     componentDidMount(){
         this.getAllDonations()
@@ -61,16 +59,16 @@ export default class MyDonationsScreen extends React.Component {
                 <MyHeader navigation={this.props.navigation} title="My Donations"/>
 
                 <View style={{flex:1}}>
-                    {this.state.allDonations.length === 0 ? (
-                        <View style={styles.subtitle}>
-                            <Text style={{ fontSize: 20}}>List of all Donations</Text>
-                        </View>
-                    ) : (
+                    {this.state.allDonations.length !== 0 ? (
                         <FlatList
                             keyExtractor={this.keyExtractor}
                             data={this.state.allDonations}
                             renderItem={this.renderItem}
-                        />
+                        />                        
+                    ) : (
+                        <View style={styles.subtitle}>
+                            <Text style={{fontSize: 20}}>List of all Donations</Text>
+                        </View>
                     )}
                 </View>
             </View>

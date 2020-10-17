@@ -24,7 +24,7 @@ export default class ReceiverDetailsScreen extends React.Component {
     getReceiverDetails = () => {
         db.collection('users').where('email_id', '==', this.state.receiverId).get()
         .then((snapshot) => {
-            snapshot.forEach((doc) => {
+            snapshot.forEach(doc => {
                 this.setState({
                     receiverName: doc.data().first_name,
                     receiverContact: doc.data.contact,
@@ -56,7 +56,7 @@ export default class ReceiverDetailsScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{flex: 0.1}}>
+                <View>
                     <Card title={`Requested Thing's information`}>
                         <Card>
                             <Text style={{fontWeight: 'bold'}}>
@@ -72,7 +72,7 @@ export default class ReceiverDetailsScreen extends React.Component {
                     </Card>
                 </View>
 
-                <View style={{flex: 0.3, marginTop: 75}}>
+                <View>
                     <Card title = {'Receiver Information'} titleStyle = {{fontSize: 20}}> 
                         <Card>
                             <Text style={{fontWeight: 'bold'}}>
@@ -134,6 +134,6 @@ const styles = StyleSheet.create({
          height: 8
        },
       elevation : 16,
-      marginTop: 100
+      marginTop: 55
     }
 });
