@@ -27,7 +27,7 @@ export default class ReceiverDetailsScreen extends React.Component {
             snapshot.forEach((doc) => {
                 this.setState({
                     receiverName: doc.data().first_name,
-                    receiverContact: doc.data.contact,
+                    receiverContact: doc.data().contact,
                     receiverAddress: doc.data().address
                 });
             });
