@@ -4,7 +4,7 @@ import db from '../config';
 import firebase from 'firebase';
 import MyHeader from '../components/MyHeader';
 
-export default class ExchangeThings extends React.Component {
+export default class ExchangeThingsScreen extends React.Component {
     constructor() {
         super();
         this.state = {

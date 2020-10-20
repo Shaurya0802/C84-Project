@@ -24,7 +24,7 @@ export default class ReceiverDetailsScreen extends React.Component {
     getReceiverDetails = () => {
         db.collection('users').where('email_id', '==', this.state.receiverId).get()
         .then((snapshot) => {
-            snapshot.forEach(doc => {
+            snapshot.forEach((doc) => {
                 this.setState({
                     receiverName: doc.data().first_name,
                     receiverContact: doc.data.contact,
@@ -44,13 +44,17 @@ export default class ReceiverDetailsScreen extends React.Component {
     }
 
     updateThingStatus = () => {
-        db.collection('all_donations').add({
+        db.collection('all_barters').add({
             thing_name: this.state.thingName,
             request_id: this.state.requestId,
             requested_by: this.state.receiverName,
             donor_id: this.state.userId,
             request_status: 'Donor Interested'
         });
+    }
+
+    componentDidMount(){
+        this.getReceiverDetails();
     }
 
     render() {
@@ -100,10 +104,10 @@ export default class ReceiverDetailsScreen extends React.Component {
                             style={styles.button}
                             onPress={() => {
                                 this.updateThingStatus();
-                                this.props.navigation.navigate('MyDonations');
+                                this.props.navigation.navigate('MyBarters');
                             }}
                         >
-                            <Text>Donate</Text>
+                            <Text>I want to exchange</Text>
                         </TouchableOpacity>
                     ) : null}
                 </View>

@@ -3,14 +3,14 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import {AppTabNavigator} from './AppTabNavigator';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import SettingScreen from '../screens/SettingsScreen';
-import MyDonationsScreen from '../screens/MyDonationsScreen';
+import MyBartersScreen from '../screens/MyBartersScreen';
 
 export const AppDrawerNavigator =  createDrawerNavigator({
     Home: {
         screen: AppTabNavigator
     },
-    MyDonations: {
-        screen: MyDonationsScreen
+    MyBarters: {
+        screen: MyBartersScreen
     },
     Setting: {
         screen: SettingScreen

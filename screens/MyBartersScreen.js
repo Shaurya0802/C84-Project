@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Text,TouchableOpacity,ScrollView,FlatList,StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { Card,Icon,ListItem } from 'react-native-elements'
 import MyHeader from '../components/MyHeader.js'
 import firebase from 'firebase';
 import db from '../config.js'
 
-export default class MyDonationsScreen extends React.Component {
+export default class MyBartersScreen extends React.Component {
     static navigationOptions = {header: null};
 
     constructor() {
@@ -18,8 +18,8 @@ export default class MyDonationsScreen extends React.Component {
         this.requestRef = null;
     }
 
-    getAllDonations = () => {
-        this.requestRef = db.collection('all_donations').where('donor_id', '==', this.state.userId)
+    getAllBarters = () => {
+        this.requestRef = db.collection('all_barters').where('donor_id', '==', this.state.userId)
         .onSnapshot((snapshot) => {
             var allDonations = snapshot.docs.map((document) => document.data());
             this.setState({
@@ -46,7 +46,7 @@ export default class MyDonationsScreen extends React.Component {
     )
 
     componentDidMount(){
-        this.getAllDonations()
+        this.getAllBarters();
     }
 
     componentWillUnmount(){
@@ -67,7 +67,7 @@ export default class MyDonationsScreen extends React.Component {
                         />                        
                     ) : (
                         <View style={styles.subtitle}>
-                            <Text style={{fontSize: 20}}>List of all Donations</Text>
+                            <Text style={{fontSize: 20}}>List of all barters</Text>
                         </View>
                     )}
                 </View>
