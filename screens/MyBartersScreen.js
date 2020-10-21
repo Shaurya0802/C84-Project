@@ -11,21 +11,58 @@ export default class MyBartersScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            userId: firebase.auth().currentUser.email,
-            allDonations: []
+            donorId: firebase.auth().currentUser.email,
+            allDonations: [],
+            donorName: ''
         }
 
         this.requestRef = null;
     }
 
-    getAllBarters = () => {
-        this.requestRef = db.collection('all_barters').where('donor_id', '==', this.state.userId)
-        .onSnapshot((snapshot) => {
-            var allDonations = snapshot.docs.map((document) => document.data());
+
+    getDonorDetails=(donorId)=>{
+        db.collection("users").where("email_id","==", donorId).get()
+        .then((snapshot)=>{
+          snapshot.forEach((doc) => {
             this.setState({
-                allDonations: allDonations
+              "donorName" : doc.data().first_name + " " + doc.data().last_name
+            })
+          });
+        })
+    }
+
+    getAllBarters =()=>{
+        this.requestRef = db.collection("all_barters").where("donor_id" ,'==', this.state.donorId).onSnapshot((snapshot)=>{
+            var allDonations = [];
+
+            snapshot.docs.map((doc) =>{
+                var donation = doc.data();
+                donation["doc_id"] = doc.id;
+                allDonations.push(donation);
             });
-        });
+            
+            this.setState({
+                allDonations : allDonations
+            });
+        })
+    }
+
+    sendRequestedItem = (thingDetails) => {
+        if (thingDetails.request_status === 'Requested item sent') {
+            var requestStatus = "Donor Interested";
+            db.collection('all_barters').doc(thingDetails.doc_id).update({
+                'request_status': 'Donor Interested'
+            });
+
+            this.sendNotification(thingDetails, requestStatus);
+        } else {
+            var requestStatus = "Requested item sent";
+            db.collection('all_barters').doc(thingDetails.doc_id).update({
+                'request_status': 'Donor Interested'
+            });
+
+            this.sendNotification(thingDetails, requestStatus);
+        }
     }
 
     sendNotification = (thingDetails, requestStatus) => {
@@ -51,22 +88,13 @@ export default class MyBartersScreen extends React.Component {
         });
     }
 
-    sendRequestedItem = (thingDetails) => {
-        if (thingDetails.request_status === 'Requested item sent') {
-            var requestStatus = "Donor Interested";
-            db.collection('all_donations').doc(thingDetails.doc_id).update({
-                'request_status': 'Donor Interested'
-            });
+    componentDidMount(){
+        this.getDonorDetails(this.state.donorId);
+        this.getAllBarters();
+    }
 
-            this.sendNotification(thingDetails, requestStatus);
-        } else {
-            var requestStatus = "Requested item sent";
-            db.collection('all_donations').doc(thingDetails.doc_id).update({
-                'request_status': 'Donor Interested'
-            });
-
-            this.sendNotification(thingDetails, requestStatus);
-        }
+    componentWillUnmount(){
+        this.requestRef();
     }
 
     keyExtractor = (item, index) => index.toString()
@@ -87,20 +115,12 @@ export default class MyBartersScreen extends React.Component {
                 }
             bottomDivider
         />
-    )
-
-    componentDidMount(){
-        this.getAllBarters();
-    }
-
-    componentWillUnmount(){
-        this.requestRef();
-    }
+    );
 
     render() {
         return (
             <View style={{flex:1}}>
-                <MyHeader navigation={this.props.navigation} title="My Donations"/>
+                <MyHeader navigation={this.props.navigation} title="My Barters"/>
 
                 <View style={{flex:1}}>
                     {this.state.allDonations.length !== 0 ? (
