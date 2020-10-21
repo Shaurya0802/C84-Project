@@ -17,7 +17,8 @@ export default class ReceiverDetailsScreen extends React.Component {
             receiverName: '',
             receiverContact: '',
             receiverAddress: '',
-            receiverRequestDocId: ''
+            receiverRequestDocId: '',
+            username: ''
         }
     }
 
@@ -50,6 +51,19 @@ export default class ReceiverDetailsScreen extends React.Component {
             requested_by: this.state.receiverName,
             donor_id: this.state.userId,
             request_status: 'Donor Interested'
+        });
+    }
+
+    addNotification = () => {
+        var message = this.state.username + 'has shown interest in donating your requested item';
+        db.collection('all_notifications').add({
+            'targeted_user_id': this.state.receiverId,
+            'donor_id': this.state.userId,
+            'request_id': this.state.requestId,
+            'thing_name': this.state.thingName,
+            'date': firebase.firestore.FieldValue.serverTimestamp(),
+            'notification_status': 'unread',
+            'message': message
         });
     }
 
@@ -104,6 +118,7 @@ export default class ReceiverDetailsScreen extends React.Component {
                             style={styles.button}
                             onPress={() => {
                                 this.updateThingStatus();
+                                this.addNotification();
                                 this.props.navigation.navigate('MyBarters');
                             }}
                         >
