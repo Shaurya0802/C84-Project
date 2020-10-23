@@ -69,7 +69,7 @@ export default class MyBartersScreen extends React.Component {
         var requestId = thingDetails.request_id;
         var donorId = thingDetails.donor_id;
 
-        db.collection('all_notifications').where('request_id', '==', requestId).where('donor_id', '==', donorId).then((snapshot) => {
+        db.collection('all_notifications').where('request_id', '==', requestId).where('donor_id', '==', donorId).get().then((snapshot) => {
             snapshot.forEach((doc) => {
                 var message = "";
 
@@ -108,7 +108,10 @@ export default class MyBartersScreen extends React.Component {
             rightElement={
                 <TouchableOpacity 
                     style={[styles.button, {backgroundColor: item.request_status === "Requested item sent" ? 'green' : '#ff5722'}]} 
-                    onPress={() => {this.sendRequestedItem(item)}}
+                    onPress={() => {
+                        this.sendRequestedItem(item);
+                        this.props.navigation.navigate('Notifications');
+                    }}
                 >
                     <Text style={{color:'#ffff'}}>{item.request_status === "Requested item sent" ? "Requested item sent" : "Send requested item"}</Text>
                 </TouchableOpacity>

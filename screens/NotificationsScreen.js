@@ -3,6 +3,7 @@ import {Text, View, FlatList} from 'react-native';
 import db from '../config';
 import firebase from 'firebase';
 import MyHeader from '../components/MyHeader';
+import {ListItem} from 'react-native-elements';
 
 export default class NotificationsScreen extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class NotificationsScreen extends React.Component {
             userId: firebase.auth().currentUser.email
         }
 
-        this.requestRef = null;
+        this.notificationRef = null;
     }
 
     getNotifications = () => {
@@ -27,11 +28,17 @@ export default class NotificationsScreen extends React.Component {
             this.setState({
                 allNotifications: allNotifications
             });
+
+            console.log(this.state.allNotifications.length);
         });
     }
 
     componentDidMount() {
         this.getNotifications();
+    }
+
+    componentWillUnmount() {
+        this.notificationRef();
     }
 
     keyExtractor = (item, index) => index.toString()
@@ -40,7 +47,7 @@ export default class NotificationsScreen extends React.Component {
         return (
             <ListItem
                 key={index}
-                title={item.book_name}
+                title={item.thing_name}
                 titleStyle={{ color: 'black', fontWeight: 'bold' }}
                 subtitle={item.message}
                 bottomDivider
@@ -57,17 +64,17 @@ export default class NotificationsScreen extends React.Component {
 
             <View style={{flex:0.9}}>
                 {
-                this.state.allNotifications.length === 0 ? (
-                    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                        <Text style={{fontSize:25}}>You have no notifications</Text>
-                    </View>
-                ) : (
-                    <FlatList
-                        keyExtractor={this.keyExtractor}
-                        data={this.state.allNotifications}
-                        renderItem={this.renderItem}
-                    />
-                )
+                    this.state.allNotifications.length !== 0 ? (
+                        <FlatList
+                            keyExtractor={this.keyExtractor}
+                            data={this.state.allNotifications}
+                            renderItem={this.renderItem}
+                        />
+                    ) : (
+                        <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                            <Text style={{fontSize:25}}>You have no notifications</Text>
+                        </View>
+                    )
                 }
             </View>
         </View>
