@@ -42,7 +42,7 @@ export default class ExchangeThingsScreen extends React.Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <MyHeader title="Request Things" />
+                <MyHeader navigation={this.props.navigation} title="Request Things" />
 
                 <KeyboardAvoidingView style={styles.keyBoardStyle} behavior="padding" enabled>
                     <TextInput 

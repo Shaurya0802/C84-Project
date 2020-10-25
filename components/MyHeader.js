@@ -24,7 +24,7 @@ export default class MyHeader extends React.Component {
         this.getNumberOfUnreadNotifications();
     }
 
-    BellIconWithBadge = (props) => {
+    BellIconWithBadge = () => {
         return (
             <View>
                 <Icon 
@@ -32,7 +32,7 @@ export default class MyHeader extends React.Component {
                     type="font-awesome" 
                     color="#696969" 
                     size={25} 
-                    onPress={() => props.navigation.navigate('Notifications')}
+                    onPress={() => this.props.navigation.navigate('Notifications')}
                 />
     
                 <Badge 
@@ -46,13 +46,11 @@ export default class MyHeader extends React.Component {
     render() {
         return (
             <Header 
-                leftComponent={<Icon name="bars" type="font-awesome" color="#696969" onPress={() => props.navigation.toggleDrawer()}/>}
-                centerComponent={{text: props.title, style: {color: '#000', fontSize: 20, fontWeight: 'bold'}}}
-                rightComponent={<BellIconWithBadge {...props}/>}
+                leftComponent={<Icon name='bars' type='font-awesome' color='#696969' onPress={() => this.props.navigation.toggleDrawer()}/>}
+                centerComponent={{text: this.props.title, style: { color: '#90A5A9', fontSize:20,fontWeight:"bold"}}}
+                rightComponent={<this.BellIconWithBadge {...this.props}/>}
                 backgroundColor = "#eaf8fe"
             />
         );
     }
 }
-
-export default MyHeader;

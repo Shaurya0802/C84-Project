@@ -50,7 +50,7 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <MyHeader title="Exchange Things" />
+                <MyHeader navigation={this.props.navigation} title="Exchange Things" />
                 {this.state.requestedThingsList.length !== 0 ? (
                     <FlatList 
                         keyExtractor={this.keyExtractor}
